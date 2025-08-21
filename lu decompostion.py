@@ -27,6 +27,5 @@ b = readmatrix('vecB.txt')
 sol = solution(a, b)
 print("Solution of the equation:", sol)
  """
- 
- Solution of the equation: [-1.7618170439978567, 0.8962280338740136, 4.051931404116157, -1.6171308025395428, 2.041913538501914, 0.15183248715593495]
+indexing error
  """
