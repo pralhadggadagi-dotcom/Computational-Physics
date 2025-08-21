@@ -15,10 +15,6 @@ upper [[1.0, 2.0, 4.0], [0, 2.0, 2.0], [0, 0, 3.0]]
 A [[1, 2.0, 4.0], [3.0, 1, 2.0], [2.0, 1.0, 1]]
 varified [[1.0, 2.0, 4.0], [3.0, 8.0, 14.0], [2.0, 6.0, 13.0]]
 """
-#Question 2
-
-matA=readmatrix("vecA.txt")
-matB=readmatrix("vecB.txt")
 
 #question 2
 a = readmatrix('vecA.txt')
@@ -29,3 +25,4 @@ print("Solution of the equation:", sol)
  """
 indexing error
  """
+
