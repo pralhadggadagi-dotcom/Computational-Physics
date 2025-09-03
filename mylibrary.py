@@ -1,4 +1,103 @@
+import math
+def bisection(a,b,accu,f):
+    if abs(a-b) < accu and (f(a) < accu or f(b) < accu) :
+        return a
+    else:
+        c=(a+b)/2
+        if f(c)*f(a) < 0 :
 
+            a,b = a,c
+        if f(c)*f(b) < 0 :
+            a,b = c,b
+        return bisection(a,b,accu,f)
+def regula_falsi(a,b,accu,f,cprev=None):
+    c = b - ((b - a) * f(b)) / (f(b) - f(a))
+    if cprev is not None and abs(cprev-c) < accu :
+        return c
+
+    if f(a)*f(c) < 0:
+        a,b=a,c
+    if f(b)*f(c) < 0:
+        a,b=c,b
+
+    return regula_falsi(a,b,accu ,func,c)
+def bracketing(a,b,f):
+    if f(a)*f(b) < 0 :
+        return a,b
+    if abs(f(a)) < abs(f(b)) :
+        a= a - 0.1*(b-a)
+    else:
+        b=b + 0.1*(b-a)
+    return bracketing(a,b,f)
+def guass_seidel(A,B):
+    n = len(A)
+    x = [0.0] * n
+    #step 1: to check itratively
+    for itration in range(100):
+        xnew = x.copy()
+        for i in range(n):
+            #solving first sumation
+            sum = 0
+            for j in range(i):
+                sum = sum + A[i][j] * xnew[j]
+            # solving second sumation
+            suma = 0
+            for j in range(i + 1, n):
+                suma = suma + A[i][j] * x[j]
+            #using eqation
+            xnew[i] = (B[i][0] - sum - suma) / A[i][i]
+
+        err = 0
+        for i in range(n):
+            if abs(xnew[i] - x[i]) > err:
+                err = abs(xnew[i] - x[i])
+    #step 2: check for threshold/convergence
+        if err < 10e-6:
+            return xnew
+        x = xnew
+def cholesky_decomp(A, B):
+    n = len(A)
+    lower = [[0.0]*n for _ in range(n)]
+
+    for i in range(n):
+        for j in range(i+1):
+            sum_val = 0
+            for k in range(j):
+                sum_val += lower[i][k] * lower[j][k]
+
+            if i == j:
+                lower[i][i] = math.sqrt(A[i][i] - sum_val)
+            else:
+                lower[i][j] = (A[i][j] - sum_val) / lower[j][j]
+
+    y = [0.0] * n
+    for i in range(n):
+        sum = 0
+        for j in range(i):
+            sum += lower[i][j] * y[j]
+        y[i] = (B[i][0] - sum) / lower[i][i]
+    x = [0.0] * n
+    for i in reversed(range(n)):
+        suma = 0
+        for j in range(i+1, n):
+            suma += lower[j][i] * x[j]
+        x[i] = (y[i] - suma) / lower[i][i]
+
+    return x, lower
+
+def jacobi(A, B, itration):
+    n = len(A)
+    x=[0]*n
+    for something in range(itration):
+        xnew=[0]*n
+        for i in range(n):
+            sum = 0
+            for j in range(n):
+                if i!= j:
+                   sum = sum +  A[i][j]*x[j]
+            xnew[i] = (B[i][0] - sum)/A[i][i]
+        x= xnew
+    return x
 def lu_decom1(A):
     n = len(A)
     lower = []
