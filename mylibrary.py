@@ -1,4 +1,13 @@
 import math
+#recently added newton raphson
+def newton_raphson(f,df,accu,x,itrations ):
+    global i
+    for i in range (itrations):
+        x1=x - f(x)/df(x)
+        if abs(x1-x) < accu:
+            print("root at: ")
+            return x1
+        x=x1
 def bisection(a,b,accu,f):
     if abs(a-b) < accu and (f(a) < accu or f(b) < accu) :
         return a
@@ -260,4 +269,5 @@ def getLU(A):
                 upper[i][j] = A[i][j]
             elif i > j:
                 lower[i][j] = A[i][j]
+
     return lower , upper
